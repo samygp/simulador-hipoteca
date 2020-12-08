@@ -1,0 +1,29 @@
+
+<form [formGroup]="hipoteca" (ngSubmit)="onSubmit()">
+    <table>
+    <tr>
+        <td><label for="valor-casa">Valor de la casa:</label></td>
+        <td><input id="valor-casa" type="text" formControlName="valorCasa" currencyMask required [options]="formatoCurr"></td>
+    </tr>
+
+    <tr>
+        <td><label for="interes-anual">Interés anualizado:</label></td>
+        <td><input type="text" id="interes-anual" formControlName="interesAnual" required>
+        </tr>
+
+    <tr>
+        <td><label for="enganche">Enganche:</label></td>
+        <td><input id="enganche" type="text" formControlName="enganche" currencyMask required [options]="formatoCurr"></td>
+    </tr>
+
+    <tr>
+        <td><label for="plazo">Plazo del crédito:</label></td>
+        <td><select id="plazo" formControlName="plazo"  required>
+            <option *ngFor="let p of [10, 15, 20]" [value]="p">{{p}} años</option>
+        </select></td>
+    </tr>
+
+    </table>
+    <br/>
+    <button class="button" type="submit">Calcular</button>
+</form>
