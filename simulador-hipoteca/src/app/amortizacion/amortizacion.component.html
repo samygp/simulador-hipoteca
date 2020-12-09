@@ -1,26 +1,73 @@
-<table>
-    <thead>
-        <tr>
-            <th>Período</th>
-            <th>Aporte a Capital</th>
-            <th>Pago de Intereses</th>
-            <th>Seguros</th>
-            <th>Pago Total</th>
-            <th>Saldo Restante</th>
-            <th>Capital Acumulado</th>
-            <th>Intereses Acumulados</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>0</td>
-            <td>{{ 123 | currency}}</td>
-            <td>{{ 123 | currency}}</td>
-            <td>{{ 123 | currency}}</td>
-            <td>{{ 123 | currency}}</td>
-            <td>{{ 123 | currency}}</td>
-            <td>{{ 123 | currency}}</td>
-            <td>{{ 123 | currency}}</td>
-        </tr>
-    </tbody>
+
+<div [hidden]="dsPeriodos.data.length == 0" style="margin-top: 1.5em;">
+  <hr>
+<table id="summary" style="margin-top: 1em;">
+  <tr>
+    <th colspan="2">Resumen:</th>
+  </tr>
+  <tr>
+    <td><label>Plazo:</label></td>
+    <td><span>{{(dsPeriodos.data.length/12).toFixed(1)}} años</span></td>
+  </tr>
+  <tr *ngFor="let obj of summary">
+    <td><label>{{obj.label}}</label></td>
+    <td><span>{{obj.value | currency}}</span></td>
+  </tr>
 </table>
+
+<div id="tablaAmortizacion" style="margin: 3em 5%;" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dsPeriodos">
+  
+      <ng-container matColumnDef="numPeriodo">
+        <th mat-header-cell *matHeaderCellDef> Período </th>
+        <td mat-cell *matCellDef="let element"> {{element.numPeriodo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="capitalPeriodo">
+        <th mat-header-cell *matHeaderCellDef> Capital Período </th>
+        <td mat-cell *matCellDef="let element"> {{element.capitalPeriodo | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="interesPeriodo">
+        <th mat-header-cell *matHeaderCellDef> Interés Período </th>
+        <td mat-cell *matCellDef="let element"> {{element.interesPeriodo | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="seguros">
+        <th mat-header-cell *matHeaderCellDef> Seguros </th>
+        <td mat-cell *matCellDef="let element"> {{element.seguros | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pagoTotal">
+        <th mat-header-cell *matHeaderCellDef> Pago Total </th>
+        <td mat-cell *matCellDef="let element"> {{element.pagoTotal | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="abonoCapital">
+        <th mat-header-cell *matHeaderCellDef> Abono a Capital </th>
+        <td mat-cell *matCellDef="let element"> {{element.abonoCapital | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="saldoRestante">
+        <th mat-header-cell *matHeaderCellDef> Saldo Restante </th>
+        <td mat-cell *matCellDef="let element"> {{element.saldoRestante | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="capitalAcumulado">
+        <th mat-header-cell *matHeaderCellDef> Capital Acumulado </th>
+        <td mat-cell *matCellDef="let element"> {{element.capitalAcumulado | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="interesAcumulado">
+        <th mat-header-cell *matHeaderCellDef> Interés Acumulado </th>
+        <td mat-cell *matCellDef="let element"> {{element.interesAcumulado | currency}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    </table>
+  
+    <mat-paginator [pageSize]="12" showFirstLastButtons></mat-paginator>
+  </div>
+  <br/>
+</div>

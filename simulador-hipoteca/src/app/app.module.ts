@@ -8,6 +8,11 @@ import { FormularioComponent } from './formulario/formulario.component';
 import { CurrencyPipe } from '@angular/common';
 import { NgxCurrencyModule } from "ngx-currency";
 import { AmortizacionComponent } from './amortizacion/amortizacion.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { CalculadoraService } from './calculadora.service';
 
 @NgModule({
   declarations: [
@@ -19,9 +24,14 @@ import { AmortizacionComponent } from './amortizacion/amortizacion.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
-  providers: [CurrencyPipe],
+  providers: [CurrencyPipe, CalculadoraService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

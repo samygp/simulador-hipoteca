@@ -1,29 +1,71 @@
 
 <form [formGroup]="hipoteca" (ngSubmit)="onSubmit()">
     <table>
+        <tr><td colspan="2"><hr></td></tr>
     <tr>
         <td><label for="valor-casa">Valor de la casa:</label></td>
-        <td><input id="valor-casa" type="text" formControlName="valorCasa" currencyMask required [options]="formatoCurr"></td>
+        <td>
+            <input id="valor-casa" type="text" formControlName="valorCasa" currencyMask required 
+            [options]="formatoCurr" (ngModelChange)="this.hipoteca.controls.enganche.setValue(0)">
+        </td>
     </tr>
 
     <tr>
         <td><label for="interes-anual">Interés anualizado:</label></td>
-        <td><input type="text" id="interes-anual" formControlName="interesAnual" required>
-        </tr>
+        <td>
+            <input type="text" matInput id="interes-anual" formControlName="interesAnual" required>
+        </td>
+    </tr>
 
     <tr>
         <td><label for="enganche">Enganche:</label></td>
-        <td><input id="enganche" type="text" formControlName="enganche" currencyMask required [options]="formatoCurr"></td>
+        <td>
+            <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="0"
+             formControlName="enganche" [max]="valorCasa()*.6"></mat-slider>
+        </td>
     </tr>
 
     <tr>
         <td><label for="plazo">Plazo del crédito:</label></td>
-        <td><select id="plazo" formControlName="plazo"  required>
+        <td>
+            <select id="plazo" formControlName="plazo"  required>
             <option *ngFor="let p of [10, 15, 20]" [value]="p">{{p}} años</option>
-        </select></td>
+            </select>
+        </td>
     </tr>
 
+    <tr><td colspan="2"><hr></td></tr>
+    <tr style="padding: 1em;">
+        <td colspan="2" 
+            style="padding: 0.7ex 1ex; background-color: #55608fEE; box-shadow: 2px 2px 2px black; color: #fff; font-size: large; border-radius: 10px 0px;">
+            Parámetros opcionales
+        </td>
+    </tr>
+    
+    <tr style="padding: 1em;">
+        <td colspan="2" 
+            style="padding: 0.7ex 1ex; background-color: #9fcce0ee; box-shadow: 2px 2px 2px black; font-size: large; border-radius: 10px 0px;">
+        <strong>Nota:&nbsp;</strong>todos los valores deben ser después de impuestos</td>
+    </tr>
+    
+
+    <tr>
+        <td><label for="ingresosMensuales">Ingresos mensuales:</label></td>
+        <td>
+            <input id="ingresosMensuales" type="text" formControlName="ingresosMensuales"
+             currencyMask [options]="formatoCurr">
+        </td>
+    </tr>
+
+    <tr>
+        <td><label for="gastosMensuales">Gastos mensuales:</label></td>
+        <td>
+            <input id="gastosMensuales" type="text" formControlName="gastosMensuales"
+             currencyMask [options]="formatoCurr">
+        </td>
+    </tr>
+    <tr><td colspan="2"><hr></td></tr>
     </table>
     <br/>
-    <button class="button" type="submit">Calcular</button>
+    <button class="button" [disabled]="this.hipoteca.invalid" type="submit">Calcular</button>
 </form>
